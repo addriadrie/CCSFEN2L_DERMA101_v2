@@ -25,203 +25,202 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
     <style>    
-    .nav-item {
-        font-family: DM Sans;
-        font-weight: bold;
-        font-size: 14px;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
+        .nav-item {
+            font-family: DM Sans;
+            font-weight: bold;
+            font-size: 14px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
 
-    .nav-link {
-        text-decoration: none;
-        color: #BE9355;
-        font-weight: bold;
-        transition: color 0.3s ease-in-out;
-    }
+        .nav-link {
+            text-decoration: none;
+            color: #BE9355;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
 
-    .nav-link:hover {
-        color: black;
-    }
+        .nav-link:hover {
+            color: black;
+        }
 
-    .carousel-sub {
-        font-family: DM Sans;
-        color: white;
-        font-weight: normal;
-        font-size: 24px;
-        line-height: normal;
-        text-align: center;
-        text-shadow: 4px 5px 4px rgb(0, 0, 0, 0.25);
-        letter-spacing: 7px;
-        position: absolute;
-        bottom: 39%;
-        left: 30.5%;
-        z-index: 20;
-    }
+        .carousel-sub {
+            font-family: DM Sans;
+            color: white;
+            font-weight: normal;
+            font-size: 24px;
+            line-height: normal;
+            text-align: center;
+            text-shadow: 4px 5px 4px rgb(0, 0, 0, 0.25);
+            letter-spacing: 7px;
+            position: absolute;
+            bottom: 39%;
+            left: 30.5%;
+            z-index: 20;
+        }
 
-    .carousel-title {
-        font-family: Poppins;
-        color: white;
-        font-weight: bold;
-        font-size: 48px;
-        line-height: 60px;
-        text-align: center;
-        text-shadow: 4px 5px 4px rgb(0, 0, 0, 0.25);
-        letter-spacing: 2px;
-        position: absolute;
-        bottom: 22%;
-        left: 30%;
-        z-index: 20;
-    }
+        .carousel-title {
+            font-family: Poppins;
+            color: white;
+            font-weight: bold;
+            font-size: 48px;
+            line-height: 60px;
+            text-align: center;
+            text-shadow: 4px 5px 4px rgb(0, 0, 0, 0.25);
+            letter-spacing: 2px;
+            position: absolute;
+            bottom: 22%;
+            left: 30%;
+            z-index: 20;
+        }
 
-    .btn-consult {
-        background-image: linear-gradient(to right, #D1913C 0%, #FFD194  51%, #D1913C  100%);
-        margin: 10px;
-        padding: 10px 20px;
-        text-align: center;
-        transition: 0.5s;
-        background-size: 200% auto;
-        color: black;                
-        border-radius: 20px;
-        font-family: DM Sans;
-        font-size: 16px;
-        border: 0px;
-        position: absolute;
-        bottom: 10%;
-        left: 39%;
-        z-index: 20;
-    }
+        .btn-consult {
+            background-image: linear-gradient(to right, #D1913C 0%, #FFD194  51%, #D1913C  100%);
+            margin: 10px;
+            padding: 10px 20px;
+            text-align: center;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: black;                
+            border-radius: 20px;
+            font-family: DM Sans;
+            font-size: 16px;
+            border: 0px;
+            position: absolute;
+            bottom: 10%;
+            left: 39%;
+            z-index: 20;
+        }
 
-    .btn-consult:hover {
-        background-position: right center;
-        color: #fff;
-        text-decoration: none;
-    }
+        .btn-consult:hover {
+            background-position: right center;
+            color: #fff;
+            text-decoration: none;
+        }
 
-    .btn-services {
-        border-color:#FFD194;
-        border-width: 3px;
-        background-color: rgba(255,250,250,.6);
-        margin: 10px;
-        padding: 10px 20px;
-        text-align: center;
-        transition: 0.5s;
-        background-size: 200% auto;
-        color: black;                
-        border-radius: 20px;
-        font-family: DM Sans;
-        font-size: 16px;
-        position: absolute;
-        bottom: 9.5%;
-        left: 50%;
-        z-index: 20;
-    }
+        .btn-services {
+            border-color:#FFD194;
+            border-width: 3px;
+            background-color: rgba(255,250,250,.6);
+            margin: 10px;
+            padding: 10px 20px;
+            text-align: center;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: black;                
+            border-radius: 20px;
+            font-family: DM Sans;
+            font-size: 16px;
+            position: absolute;
+            bottom: 9.5%;
+            left: 50%;
+            z-index: 20;
+        }
 
-    .btn-services:hover {
-        background-position: right center;
-        color:#BE9355;
-        text-decoration: none;
-    }
+        .btn-services:hover {
+            background-position: right center;
+            color:#BE9355;
+            text-decoration: none;
+        }
 
-    .services-photos {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-    }
+        .services-photos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    .service-photo img {
-        width: 280px;
-        height: auto;
-        margin: 10px;
-    }
+        .service-photo img {
+            width: 280px;
+            height: auto;
+            margin: 10px;
+        }
 
-    .services-btn {
-        border-color: #BE9355;
-        border-width: 3px;
-        color: #BE9355;
-        border-radius: 16px;
-        font-family: DM Sans;
-        font-weight: bold;
-        display: flex;
-        margin-top: 10px;
-        margin-left: 45%;
-    }
+        .services-btn {
+            border-color: #BE9355;
+            border-width: 3px;
+            color: #BE9355;
+            border-radius: 16px;
+            font-family: DM Sans;
+            font-weight: bold;
+            display: flex;
+            margin-top: 10px;
+            margin-left: 45%;
+        }
 
-    .services-btn:hover {
-        background-color: #BE9355;
-        color: white;
-    }
+        .services-btn:hover {
+            background-color: white;
+        }
 
-    .about-us-content {
-        font-family: DM Sans;
-        padding-left: 20px;
-    } 
+        .about-us-content {
+            font-family: DM Sans;
+            padding-left: 20px;
+        } 
 
-    .about-us-container {
-        display: flex;
-        align-items: center;
-        justify-content: center
+        .about-us-container {
+            display: flex;
+            align-items: center;
+            justify-content: center
 
-    }
+        }
 
-    .read-more-button {
-        background-color: #BE9355;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-    }
+        .read-more-button {
+            background-color: #BE9355;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
 
-    .read-more-button:hover {
-        background-color: #FFC080;
-    }
+        .read-more-button:hover {
+            background-color: #FFC080;
+        }
 
-    .btn-book {
-        background-image: linear-gradient(to right, #D1913C 0%, #FFD194  51%, #D1913C  100%);
-        margin: 10px;
-        padding: 10px 20px;
-        text-align: center;
-        transition: 0.5s;
-        background-size: 200% auto;
-        color: black;                
-        border-radius: 20px;
-        font-family: DM Sans;
-        font-size: 16px;
-        border: 0px;
-        position: absolute;
-        bottom: 10%;
-        left: 39%;
-        z-index: 20;
-    }
+        .btn-book {
+            background-image: linear-gradient(to right, #D1913C 0%, #FFD194  51%, #D1913C  100%);
+            margin: 10px;
+            padding: 10px 20px;
+            text-align: center;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: black;                
+            border-radius: 20px;
+            font-family: DM Sans;
+            font-size: 16px;
+            border: 0px;
+            position: absolute;
+            bottom: 10%;
+            left: 39%;
+            z-index: 20;
+        }
 
-    .btn-book:hover {
-        background-position: right center;
-        color: #fff;
-        text-decoration: none;
-    }
+        .btn-book:hover {
+            background-position: right center;
+            color: #fff;
+            text-decoration: none;
+        }
 
-    .footer {
-        background-color: #f4f5f6;
-        font-family: DM Sans;
-    }
-    
-    .footer-title {
-        font-family: Poppins;
-        font-weight: bold;
-        color: #BE9355;
-        font-size: 18px;
-    }
+        .footer {
+            background-color: #f4f5f6;
+            font-family: DM Sans;
+        }
+        
+        .footer-title {
+            font-family: Poppins;
+            font-weight: bold;
+            color: #BE9355;
+            font-size: 18px;
+        }
 
-    .footer-icons {
-        float: right;
-    }
-
+        .footer-icons {
+            float: right;
+        }
     </style>
 </head>
 
+<body>
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
@@ -232,7 +231,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="index.php">Home</a>
+                    <a class="nav-link" aria-current="page" href="guest-index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#services">Services</a>
@@ -262,15 +261,19 @@
                     Trust only the experts,<br>Trust DERMA 101
                 </div>
                 <div>
-                    <button class="btn-consult">Consult Now</button>
-                    <button class="btn-services">See Services</button>
+                    <button class="btn-consult">
+                        <a href="login.php" style="color: white; text-decoration: none;">Consult Now</a>
+                    </button>
+                    <button class="btn-services">
+                        <a href="#services" style="color: black; text-decoration: none;">See Services</a>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- SERVICES -->
-    <div class="container">
+    <div id="services" class="container">
         <br><br>
         <p style="font-family:Poppins; text-align:center; color:#D3D3D3; margin-bottom:auto; font-size:20px;">Most Popular</p>
         <p style="font-family:DM Sans; text-align:center; color:#BE9355; font-weight:bold; font-size:24px">Our Exclusive Services</p>
@@ -288,14 +291,16 @@
                 <img src="index-images/services-body.png" alt="Body Treatments">             
             </div>
         </div>
-        <button class="services-btn">&nbsp;&nbsp;See More&nbsp;&nbsp;</button>
+        <button class="services-btn">
+            <a href="guest-services.php" style="color: #BE9355; text-decoration: none;">&nbsp;&nbsp;See More&nbsp;&nbsp;</a>
+        </button>
     </div>
 
     <br><br>
 
     <!-- ABOUT US -->
     <div style="background-color: #f4f5f6;">
-        <div class="container">
+        <div id="about" class="container">
             <br><br>    
             <p style="font-family:Poppins; text-align:center; color:#D3D3D3; margin-bottom:auto; font-size:20px;">About Us</p>
             <p style="font-family:DM Sans; text-align:center; color:#BE9355; font-weight:bold; font-size:24px">Our Story</p>
@@ -307,7 +312,7 @@
                     <p style="font-weight: bold;">It all started from a vision…</p> 
                     <p>Derma 101 would be the start of something big; it would be the basic foundation of all.</p>
                     <p>For 15 years now, Derma 101 has been true to its mission of providing professional excellent dermatological services upholding the highest ethical standard and quality care. We continue to grow and help people and we will continue to strive for excellence to serve you better.</p>
-                    <a href="guest-about-us.php" class="btn read-more-button">Read More</a>
+                    <a href="guest-aboutus.php" class="btn read-more-button">Read More</a>
                 </div>
 
             </div>
@@ -365,11 +370,11 @@
             <div class="col-sm-7">
                 <div class="input-group" style="width: 350px; margin-right: 120px">
                     <div class="input-group-text">@</div>
-                    <input type="text" class="form-control" placeholder="Email">                       
+                    <input type="text" id="guestEmail" class="form-control" placeholder="Email">                       
                 </div>
             </div>
             <div class="col-6 col-sm-3">
-                <button class="btn btn-warning">Book Now</button>
+                <button class="btn btn-warning"><a href="login.php" style="color: white; text-decoration: none">Book Now</a></button>
             </div>
         </div>
     </div>
@@ -402,3 +407,12 @@
             </div>     
         </div>           
     </footer>
+
+    <script>
+        function setEmail() {
+            var guestEmail = document.getElementById('guestEmail').value;
+            localStorage.setItem('guestEmail', guestEmail);
+        }
+    </script>
+</body>
+</html>
