@@ -226,15 +226,15 @@
         <div class="container">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="guest-index.php">
                     <img src="images/LOGO.png" alt="Derma101" height="30">
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="guest-index.php">Home</a>
+                    <a class="nav-link active" aria-current="page" href="guest-index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#services">Services</a>
+                    <a class="nav-link" href="#services">Services</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#about">About Us</a>
