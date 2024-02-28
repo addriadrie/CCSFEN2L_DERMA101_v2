@@ -1,13 +1,12 @@
 <?php
-    // WHY DO WE NEED TO START A SESSION FOR A GUEST WITH NO ACCOUNT THEREFORE NO USER ID?
-    // session_start();
-    // if (isset($_SESSION["user_id"])) {
-    //     $mysqli = require __DIR__ . "/connect.php";
-    //         $sql = "SELECT * FROM user
-    //         WHERE id = {$_SESSION["user_id"]}";  
-    //     $result = $mysqli->query($sql);
-    //     $user = $result->fetch_assoc();
-    // }
+    session_start();
+    if (isset($_SESSION["user_id"])) {
+        $mysqli = require __DIR__ . "/connect.php";
+            $sql = "SELECT * FROM user
+            WHERE id = {$_SESSION["user_id"]}";  
+        $result = $mysqli->query($sql);
+        $user = $result->fetch_assoc();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -161,7 +160,6 @@
             display: flex;
             align-items: center;
             justify-content: center
-
         }
 
         .read-more-button {
