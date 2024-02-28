@@ -1,37 +1,18 @@
-<?php
-    // Enable error reporting for debugging (remove in production)
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    require "Efunctions.php";
-    $errors = array();
-    if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        // Validate login
-        $errors = login($_POST);
-
-        if (count($errors) == 0) {
-            // Redirect to the profile page after successful login
-            header("Location: profile.php"); //patient-home.php
-            exit();
-        }
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Forgot Password</title>
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
     <style>
         body {
-            font-family: DM Sans;
+            font-family: 'DM Sans', Poppins;
             margin: 0;
             padding: 0;
-            background: #f4f5f6;
+            background: #f5f5f5;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -39,7 +20,7 @@
         }
 
         .container {
-            max-width: 300px; /* Adjust as needed */
+            max-width: 400px; /* Adjusted width */
             width: 100%;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -71,7 +52,8 @@
             width: 70px;
             height: auto;
             display: block;
-            margin-top: 30%;
+            margin-top: 25%;
+            margin-left: 10px;
         }
 
         .join {
@@ -82,7 +64,7 @@
             color: rgb(0,0,0,.8);
             font-weight: bold;
             margin-top: 15px;
-            margin-left: 15px;
+            margin-left: 20px;
             margin-bottom: 5px;
         }
 
@@ -92,7 +74,7 @@
             text-align: left;
             line-height: normal;
             color:black;
-            margin-left: 15px;
+            margin-left: 20px;
             margin-right: 15px;
         }
 
@@ -104,28 +86,31 @@
             flex-direction: column;
         }
 
-        .welcome {
+        .title {
             font-family: 'DM Sans';
             font-size: 24px;
             color: #be9355;
             font-weight: bold;
             text-align: left;
-            margin-top: 40px;
             margin-left: 10px;
-            margin-bottom: 5px;
+            margin-bottom: 0px;
+            margin-top: 40px;
         }
 
-        .tagline-welcome {
+        .tagline-right {
             font-family: 'Poppins';
             font-size: 13px;
             color: black;
             text-align: left;
             margin-left: 10px;
+            margin-bottom: 35px;
+            margin-right: 10px;
         }
 
         .form-group {
             margin-bottom: 20px;
             text-align: left;
+            margin-right: 15px;
         }
 
         label {
@@ -137,43 +122,34 @@
         }
 
         input {
-            font-size: 12px;
+            font-family: 'DM Sans';
+            font-size: 13px;
             width: 100%;
-            padding: 6px;
+            padding: 8px;
             box-sizing: border-box;
             border: 1px solid #ddd;
             border-radius: 5px;
             margin-left: 10px;
         }
 
-        .forgot-password {
-            margin-top: 10px;
-            color: #be9355;
-            text-decoration: none;
-            font-size: 12px;
-            display: block;
-            float: right;
-        }
-
-        .sign-in-btn {
+        .reset-btn {
+            font-family: 'DM Sans';
             background-color: #be9355;
             font-size: 14px;
             color: #fff;
-            padding: 6px;
+            padding: 8px;
             width: 100%;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin-left: 10px;
-            margin-top: 8px;          
+            margin-top: 15px;
+            margin-bottom: 10px;
         }
 
         .link {
             color: #555;
             font-size: 12px;
-            text-align: center;
-            line-height: normal;
-            margin-left: 10px;
         }
 
         /* Media Queries for Responsive Design */
@@ -200,10 +176,7 @@
         }
     </style>
 
-    <title>Login</title>
-    <link rel="icon" type="image/x-icon" href="images/LOGO.png">
 </head>
-
 <body>
     <div class="container">
         <div class="panels">
@@ -213,29 +186,18 @@
                 <p class="tagline">Derma 101 aims to provide professional excellent dermatological services specializing in both pathologic and cosmetic dermatology upholding the highest ethical standards and quality care.</p>
             </div>
             <div class="panel lower-panel">
-                <p class="welcome">Welcome Back</p>
-                <p class="tagline-welcome">Enhance your Beauty Today</p>
-                <form method="post">
-                    <div class="form-group">
+                <p class="title">Password Reset</p>
+                <p class="tagline-right">There is nothing to worry about; we'll send you a message to help you reset your password.</p>
+                <div class="form-group">
+                    <form method="POST" action="send-password-reset.php">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="Enter email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter password" required>
-                        <a href="forgot-password.php" class="forgot-password">Forgot Password?</a>
-                    </div>
-                    <button type="submit" class="sign-in-btn">Log In</button>
-                </form>
-                <?php if (!empty($errors)): ?>
-                    <div class="alert alert-danger">
-                        <?php foreach ($errors as $error): ?>
-                            <?= $error ?> <br>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-                <p class="link" style="margin-top: 15px; margin-bottom: 10px;">Don't have an account yet? <a href="signup.php" style="color:#be9355">Sign Up</a></p>
-                <p class="link" style="margin-bottom: 40px">Are you an admin? <a href="admin-login.php" style="color:#be9355">Login here</a></p>
+                        <button class="reset-btn" type="submit">Send Reset Link</button>
+                    </form>
+                </div>
+                <!-- no backend -->
+                <!-- <p class="link" style="margin-top: -10px; margin-bottom: 15px;">Resend email</p> -->
+                <p class="link" style="margin-bottom: 50px">Already have an account? <a href="login.php" style="color: #be9355;">Login</a></p>
             </div>
         </div>
     </div>
