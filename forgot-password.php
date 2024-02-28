@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
@@ -52,8 +51,8 @@
             width: 70px;
             height: auto;
             display: block;
-            margin-top: 25%;
-            margin-left: 10px;
+            margin-top: 35%;
+            margin-left: 20px;
         }
 
         .join {
@@ -64,7 +63,7 @@
             color: rgb(0,0,0,.8);
             font-weight: bold;
             margin-top: 15px;
-            margin-left: 20px;
+            margin-left: 28px;
             margin-bottom: 5px;
         }
 
@@ -74,13 +73,13 @@
             text-align: left;
             line-height: normal;
             color:black;
-            margin-left: 20px;
+            margin-left: 28px;
             margin-right: 15px;
         }
 
         .lower-panel {
             background: #fff;
-            padding: 20px;
+            padding: 40px;
             border-radius: 0 0 10px 10px; /* Adjust as needed */
             display: flex;
             flex-direction: column;
@@ -92,9 +91,8 @@
             color: #be9355;
             font-weight: bold;
             text-align: left;
-            margin-left: 10px;
             margin-bottom: 0px;
-            margin-top: 40px;
+            margin-top: 50px;
         }
 
         .tagline-right {
@@ -102,15 +100,12 @@
             font-size: 13px;
             color: black;
             text-align: left;
-            margin-left: 10px;
-            margin-bottom: 35px;
-            margin-right: 10px;
+            margin-bottom: 60px;
         }
 
         .form-group {
             margin-bottom: 20px;
-            text-align: left;
-            margin-right: 15px;
+            text-align: left; 
         }
 
         label {
@@ -118,7 +113,6 @@
             font-size: 14px;        
             color: rgb(0,0,0,.8);
             margin-bottom: 5px;
-            margin-left: 10px;
         }
 
         input {
@@ -129,7 +123,6 @@
             box-sizing: border-box;
             border: 1px solid #ddd;
             border-radius: 5px;
-            margin-left: 10px;
         }
 
         .reset-btn {
@@ -142,9 +135,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-left: 10px;
             margin-top: 15px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .link {
@@ -176,6 +168,9 @@
         }
     </style>
 
+    <title>Forgot Password</title>
+    <link rel="icon" type="image/x-icon" href="images/LOGO.png">
+
 </head>
 <body>
     <div class="container">
@@ -186,7 +181,7 @@
                 <p class="tagline">Derma 101 aims to provide professional excellent dermatological services specializing in both pathologic and cosmetic dermatology upholding the highest ethical standards and quality care.</p>
             </div>
             <div class="panel lower-panel">
-                <p class="title">Password Reset</p>
+                <p class="title">Forgot Password</p>
                 <p class="tagline-right">There is nothing to worry about; we'll send you a message to help you reset your password.</p>
                 <div class="form-group">
                     <form method="POST" action="send-password-reset.php">
