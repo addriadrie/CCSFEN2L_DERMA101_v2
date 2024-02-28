@@ -15,7 +15,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -218,6 +217,8 @@
             float: right;
         }
     </style>
+    <title>Derma 101</title>
+    <link rel="icon" type="image/x-icon" href="images/LOGO.png">
 </head>
 
 <body>
@@ -231,7 +232,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="guest-index.php">Home</a>
+                    <a class="nav-link active" aria-current="page" href="guest-index.php" style="color: #BE9355;">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#services">Services</a>
@@ -397,8 +398,8 @@
                             <div class=" footer-icons">
                                 <br><br>
                                 <a href="https://www.facebook.com/Derma101" style="color: #BE9355;"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                                <a href="derma101ph@yahoo.com" style="color: #BE9355;"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                                <a href="derma101ph.com" style="color: #BE9355;"><i class="fa fa-globe fa-2x" aria-hidden="true"></i></a>                  
+                                <a href="mailto:derma101ph@yahoo.com" style="color: #BE9355;"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                                <a href="https://www.derma101ph.com" style="color: #BE9355;"><i class="fa fa-globe fa-2x" aria-hidden="true"></i></a>                  
                             </div>
                         </p> <br><br><br><br>
                         <p class="footer-copyright" style="text-align: right; color: #C0C0C0; font-size: 14px;">Copyright © 2024. All rights reserved.</p>
