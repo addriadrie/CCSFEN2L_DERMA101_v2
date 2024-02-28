@@ -148,7 +148,6 @@
 </head>
 
 <body>
-
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
@@ -159,13 +158,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="guest-index.php" style="color: #BE9355;">Home</a>
+                    <a class="nav-link" aria-current="page" href="guest-index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#services">Services</a>
+                    <a class="nav-link" href="guest-services.php">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">About Us</a>
+                    <a class="nav-link active" aria-current="page" href="guest-aboutus.php" style="color: #BE9355;">About Us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link smooth-scroll" href="#contact">Contact</a>
@@ -181,6 +180,7 @@
         <br><br>
         <p style="font-family:Poppins; text-align:center; color:#D3D3D3; margin-bottom:auto; font-size:20px;">The Story Behind</p>
         <p style="font-family:DM Sans; text-align:center; color:#BE9355; font-weight:bold; font-size:32px">About Us</p>
+        <br>
     </div>
 
     <!-- FIRST SECTION -->
