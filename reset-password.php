@@ -1,27 +1,40 @@
 <?php
+    // Include database connection
+    include "db_connection.php";
 
-    $token = $_GET["token"];
-    $token_hash = hash("sha256", $token);
-    $mysqli = require __DIR__ . "/connect.php";
-    $sql = "SELECT * FROM user WHERE reset_token_hash = ?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $token_hash);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $user = $result->fetch_assoc();
+    // Define variables for error handling and success message
+    $error = "";
+    $success_message = "";
 
-    if ($user === null) {
-        die("Token not found");
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Retrieve token from the form
+        $token = $_POST["token"];
+        
+        // Retrieve new password and password confirmation from the form
+        $new_password = $_POST["password"];
+        $password_confirmation = $_POST["password_confirmation"];
+        
+        // Validate if passwords match
+        if ($new_password !== $password_confirmation) {
+            $error = "Passwords do not match.";
+        } else {
+            // Hash the new password
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            
+            // Update password and clear reset_token in the database
+            $sql = "UPDATE tblusers SET password='$hashed_password', reset_token=NULL WHERE reset_token='$token'";
+            
+            if ($conn->query($sql) === TRUE) {
+                $success_message = "Password reset successfully.";
+                header("refresh:3;url=login.php"); // Redirect to login.php after 3 seconds
+            } else {
+                $error = "Error updating password: " . $conn->error;
+            }
+        }
     }
 
-    if (strtotime($user["reset_token_expires_at"]) <= time()) {
-        die("Token has expired");
-    }
-
-    // Generate and store CSRF token
-    $csrf_token = bin2hex(random_bytes(32));
-    $_SESSION['csrf_token'] = $csrf_token;
+    $conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -104,6 +117,7 @@
             color:black;
             margin-left: 30px;
             margin-right: 15px;
+            margin-bottom: 150px;
         }
 
         .lower-panel {
@@ -120,7 +134,7 @@
             color: #be9355;
             font-weight: bold;
             text-align: left;
-            margin-bottom: 0px;
+            margin-bottom: 20px;
             margin-top: 60px;
         }
 
@@ -205,23 +219,26 @@
             </div>
             <div class="panel lower-panel">
                 <p class="title">Reset Password</p>
-                <p class="tagline-right">Enter your new password</p>
-                <form method="get" action="process-reset-password.php">
-                    <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">              
-                    <label for="password">New Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter new password">
-                    
-                    <label for="password_confirmation">Confirm New Password</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Re-enter new password">
-                    
-                    <!-- Display validation messages if any -->
-                    <?php if (isset($_SESSION['validation_error'])): ?>
-                        <p style="color: red;"><?php echo $_SESSION['validation_error']; ?></p>
-                        <?php unset($_SESSION['validation_error']); ?>
-                    <?php endif; ?>
-
-                    <button type="submit" class="reset-btn">Reset Password</button>
-                </form>
+                <?php if($error !== ""): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error; ?>
+                    </div>
+                <?php elseif($success_message !== ""): ?>
+                    <div class="alert alert-success" role="alert">
+                        <?php echo $success_message; ?>
+                    </div>
+                <?php else: ?>
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <?php if(isset($_GET['token'])): ?>
+                            <input type="hidden" name="token" value="<?= htmlspecialchars($_GET['token']) ?>">
+                        <?php endif; ?>
+                        <label for="password">New Password</label>
+                        <input type="password" id="password" name="password" required>
+                        <label for="password_confirmation">Confirm New Password</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required>
+                        <button class="reset-btn" type="submit">Update Password</button>
+                    </form>
+                <?php endif; ?>
             </div>
         </div>
     </div>
