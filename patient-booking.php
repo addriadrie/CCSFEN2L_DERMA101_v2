@@ -25,21 +25,36 @@
     
     if(isset($_POST['submit'])){
         // fetching date and note upon submission
-        $date=$_POST['date'];
-        $note=$_POST['note'];
+        $date = $_POST['date'];
+        $note = $_POST['note'];
+
+        // generating appt id
+        $prefix = date("Ymd", strtotime($date));
+        $sql = "SELECT MAX(apptID) AS latest FROM tblappt WHERE apptDate = '$date'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+
+        if ($row['latest'] === null) {
+            // No appt made on the current date
+            $count = 1;
+            $length = 3;
+            $apptID = $prefix . str_pad($count, $length, '0', STR_PAD_LEFT);
+        } else {
+            $latest = intval($row['latest']);
+            $apptID = $latest +1;
+        }
 
         // inserting to appointment table
-        $sql="INSERT INTO tblappt(patientID, serviceID, apptDate, patientNote, statusID) VALUES ($patientID,'$serviceID', '$date', '$note', 1)";
+        $sql = "INSERT INTO tblappt(apptID, patientID, serviceID, apptDate, patientNote, statusID) VALUES ('$apptID', $patientID,'$serviceID', '$date', '$note', 1)";
         $result = $conn->query($sql);
 
         // if successful insertion
         if ($result) {
-            header('location: patient-appt.php');
+            header('location: patient-appt.php?patientID='.$patientID);
         } else {
-            die("Connection failed: " . $mysqli->connect_error);          
+            die("Connection Failed: " . $conn->connect_error);        
         }
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -235,44 +250,46 @@
             <div class="col-md-8">
                 <div class="service-row">
                     <div class="form-group col-md-6">
-                        <input class="form-control" type="text" value="<?php echo $ctgName ?>" aria-label="Disabled input example" disabled readonly id="ctgName">
+                        <input class="form-control" type="text" value="<?php echo $ctgName ?>" aria-label="Disabled input example" disabled readonly name="ctgName">
                     </div>
                     <div class="form-group col-md-6">
-                        <input class="form-control" type="text" value="<?php echo $svcName ?>" aria-label="Disabled input example" disabled readonly id="svcName"> 
+                        <input class="form-control" type="text" value="<?php echo $svcName ?>" aria-label="Disabled input example" disabled readonly name="svcName"> 
                     </div>
                 </div>
                 <div class="name-row">
                     <div class="form-group col-md-4">
                         <label class="form-label">First Name</label>
-                        <input type="text" class="form-control" value="<?php echo $fname ?>" aria-label="Disabled input example" disabled readonly id="fname">
+                        <input type="text" class="form-control" value="<?php echo $fname ?>" aria-label="Disabled input example" disabled readonly name="fname">
                     </div>
                     <div class="form-group col-md-4">
                         <label class="form-label">Middle Name</label>
-                        <input type="text" class="form-control" value="<?php echo $midname ?>" aria-label="Disabled input example" disabled readonly id="midname">
+                        <input type="text" class="form-control" value="<?php echo $midname ?>" aria-label="Disabled input example" disabled readonly name="midname">
                     </div>
                     <div class="form-group col-md-4">
                         <label class="form-label">Last Name</label>
-                        <input type="text" class="form-control" value="<?php echo $lname ?>" aria-label="Disabled input example" disabled readonly id="lname">
+                        <input type="text" class="form-control" value="<?php echo $lname ?>" aria-label="Disabled input example" disabled readonly name="lname">
                     </div>
                 </div>
-                <div class="email-row">
-                    <div class="form-group col-md-6">
-                        <label class="form-label">Email</label>
-                        <input type="text" class="form-control" value="<?php echo $email ?>" aria-label="Disabled input example" disabled readonly id="email">  
+                <form method="post">
+                    <div class="email-row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" value="<?php echo $email ?>" aria-label="Disabled input example" disabled readonly name="email">  
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="form-label">Select Date</label>
+                            <input type="date" class="form-control" min="<?php echo date("Y-m-d"); ?>" name="date" required>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-label">Select Date</label>
-                        <input type="date" class="form-control" min="<?php echo date("Y-m-d"); ?>" id="date" required>
+                    <div class="third-row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label">Additional Note</label>
+                            <textarea class="form-control" placeholder="Please indicate any special instructions such as allergies, pregnancy, and the like." name="note" style="font-size: 13px; height: 120px;"></textarea>
+                            
+                        </div>
                     </div>
-                </div>
-                <div class="third-row">
-                    <div class="form-group col-md-12">
-                        <label class="form-label">Additional Note</label>
-                        <textarea class="form-control" placeholder="Please indicate any special instructions such as allergies, pregnancy, and the like." id="note" style="font-size: 13px; height: 120px;"></textarea>
-                        
-                    </div>
-                </div>
-                <button type="submit" class="button" name="submit">Confirm</button>
+                    <button type="submit" class="button" name="submit">Confirm</button>
+                </form>
             </div>
             <!-- One-third width column -->
             <div class="col-md-4">
