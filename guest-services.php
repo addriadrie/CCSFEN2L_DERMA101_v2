@@ -1,5 +1,5 @@
 <?php
-    include('connect.php');
+    include('db_connection.php');
 ?>
 
 <!DOCTYPE html>
@@ -148,7 +148,7 @@
                     <a class="nav-link" href="guest-index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active"  aria-current="page" href="guest-services.php" style="color: #BE9355;">Services</a>
+                    <a class="nav-link active" aria-current="page" href="guest-services.php" style="color: #BE9355;">Services</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="guest-aboutus.php">About Us</a>

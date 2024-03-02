@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2024 at 08:47 PM
+-- Generation Time: Feb 28, 2024 at 04:01 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,24 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_derma`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbladmin`
+--
+
+CREATE TABLE `tbladmin` (
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbladmin`
+--
+
+INSERT INTO `tbladmin` (`username`, `password`) VALUES
+('admin', 'admin123');
 
 -- --------------------------------------------------------
 
@@ -180,23 +198,6 @@ INSERT INTO `tblservice` (`serviceID`, `image`, `serviceName`, `serviceFee`, `ca
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblsignup`
---
-
-CREATE TABLE `tblsignup` (
-  `signupID` int(11) NOT NULL,
-  `firstName` varchar(255) NOT NULL,
-  `middleName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `dateRegistered` timestamp NOT NULL DEFAULT current_timestamp(),
-  `patientID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tblstatus`
 --
 
@@ -212,45 +213,43 @@ CREATE TABLE `tblstatus` (
 --
 
 CREATE TABLE `tblusers` (
-  `patientID` int(11) NOT NULL,
-  `firstName` varchar(255) NOT NULL,
-  `middleName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `patientID` int(11) DEFAULT NULL,
+  `firstName` varchar(50) NOT NULL,
+  `middleName` varchar(50) NOT NULL,
+  `lastName` varchar(50) NOT NULL,
   `dateOfBirth` date NOT NULL,
   `sex` char(1) NOT NULL,
-  `bloodType` varchar(2) NOT NULL,
-  `email` varchar(255) NOT NULL
+  `bloodType` varchar(5) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `is_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `verification_code` varchar(100) DEFAULT NULL,
+  `reset_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tblusers`
 --
 
-INSERT INTO `tblusers` (`patientID`, `firstName`, `middleName`, `lastName`, `dateOfBirth`, `sex`, `bloodType`, `email`) VALUES
-(100001, 'Juan', '', 'dela Cruz', '2000-07-02', 'M', 'O+', 'juandelacruz@email.com'),
-(100002, 'Sunday', 'dela Cruz', 'Barrios', '1991-09-26', 'F', 'O+', 'sundaybarrios@email.com'),
-(100003, 'Ana Isabel', 'Barrios', 'Cabrera', '1998-03-02', 'F', '', 'isabelcabrera@email.com'),
-(100004, 'Jordi', '', 'Lopez', '2003-08-30', 'F', 'AB', 'jordilopez@email.com'),
-(100005, 'Francis', 'Lopez', 'Reyes', '1995-10-06', 'M', 'A+', 'francislopez@email.com'),
-(100006, 'Rosa Maria', 'Lopez', 'Rubio', '1999-05-13', 'F', 'A-', 'rosamaria@email.com'),
-(100007, 'Lydia', 'Rubio', 'Gomez', '1998-08-19', 'F', '', 'lydiagomez@email.com'),
-(100008, 'Felix', 'Gomez', 'Torres', '1991-05-10', 'M', '', 'felixgomez@email.com'),
-(100009, 'Isabela', '', 'Mendez', '1986-02-23', 'F', 'AB', 'isabelamendez@email.com'),
-(100010, 'Victoria', 'Mendez', 'Cruz', '1993-07-28', 'F', 'B+', 'victoriacruz@email.com');
-
--- --------------------------------------------------------
+INSERT INTO `tblusers` (`userID`, `patientID`, `firstName`, `middleName`, `lastName`, `dateOfBirth`, `sex`, `bloodType`, `email`, `password`, `is_verified`, `verification_code`, `reset_token`, `created_at`) VALUES
+(1, 10001, 'Mariel', 'Verbo', 'Ollage', '2003-04-19', 'f', 'A', 'marielollage52@gmail.com', '$2y$10$rL.vWRkog84hFgq9OdjzN.9WE8a9s25dJFbO1BoajjCPtV9qbTlea', 1, '041326', '65df35ae5d445', '2024-02-28 11:26:48');
 
 --
--- Table structure for table `tblverify`
+-- Triggers `tblusers`
 --
-
-CREATE TABLE `tblverify` (
-  `verifyID` int(11) NOT NULL,
-  `signupID` int(11) NOT NULL,
-  `verificationCode` varchar(255) NOT NULL,
-  `isVerified` tinyint(1) NOT NULL DEFAULT 0,
-  `dateGenerated` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DELIMITER $$
+CREATE TRIGGER `before_insert_tblusers` BEFORE INSERT ON `tblusers` FOR EACH ROW BEGIN
+    IF NEW.userID IS NULL THEN
+        SET NEW.userID = (SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'tblusers' AND table_schema = DATABASE()) + 10000;
+    END IF;
+    IF NEW.patientID IS NULL THEN
+        SET NEW.patientID = (SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'tblusers' AND table_schema = DATABASE()) + 1;
+    END IF;
+END
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -281,7 +280,8 @@ ALTER TABLE `tblproduct`
 -- Indexes for table `tblsched`
 --
 ALTER TABLE `tblsched`
-  ADD KEY `FK_schedApptID` (`apptID`);
+  ADD KEY `FK_schedApptID` (`apptID`),
+  ADD KEY `FK_schedSvcID` (`serviceName`);
 
 --
 -- Indexes for table `tblservice`
@@ -289,14 +289,6 @@ ALTER TABLE `tblsched`
 ALTER TABLE `tblservice`
   ADD PRIMARY KEY (`serviceID`),
   ADD KEY `fk_categID` (`categID`);
-
---
--- Indexes for table `tblsignup`
---
-ALTER TABLE `tblsignup`
-  ADD PRIMARY KEY (`signupID`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `fk_patientID` (`patientID`);
 
 --
 -- Indexes for table `tblstatus`
@@ -308,14 +300,8 @@ ALTER TABLE `tblstatus`
 -- Indexes for table `tblusers`
 --
 ALTER TABLE `tblusers`
-  ADD PRIMARY KEY (`patientID`);
-
---
--- Indexes for table `tblverify`
---
-ALTER TABLE `tblverify`
-  ADD PRIMARY KEY (`verifyID`),
-  ADD UNIQUE KEY `signupID` (`signupID`);
+  ADD PRIMARY KEY (`userID`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -328,16 +314,10 @@ ALTER TABLE `tblcategory`
   MODIFY `categID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `tblsignup`
+-- AUTO_INCREMENT for table `tblusers`
 --
-ALTER TABLE `tblsignup`
-  MODIFY `signupID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tblverify`
---
-ALTER TABLE `tblverify`
-  MODIFY `verifyID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tblusers`
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
@@ -350,18 +330,6 @@ ALTER TABLE `tblsched`
   ADD CONSTRAINT `FK_schedApptID` FOREIGN KEY (`apptID`) REFERENCES `tblappt` (`apptID`),
   ADD CONSTRAINT `FK_schedSvcID` FOREIGN KEY (`serviceName`) REFERENCES `tblservice` (`serviceID`),
   ADD CONSTRAINT `tblsched_ibfk_1` FOREIGN KEY (`apptID`) REFERENCES `tblappt` (`apptID`);
-
---
--- Constraints for table `tblsignup`
---
-ALTER TABLE `tblsignup`
-  ADD CONSTRAINT `fk_patientID` FOREIGN KEY (`patientID`) REFERENCES `tblusers` (`patientID`);
-
---
--- Constraints for table `tblverify`
---
-ALTER TABLE `tblverify`
-  ADD CONSTRAINT `fk_signupID` FOREIGN KEY (`signupID`) REFERENCES `tblsignup` (`signupID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
