@@ -1,3 +1,80 @@
+<?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    require 'PHPMailer-master/src/Exception.php';
+    require 'PHPMailer-master/src/PHPMailer.php';
+    require 'PHPMailer-master/src/SMTP.php';
+
+    // Function to send email using PHPMailer
+    function send_mail($recipient, $subject, $token)
+    {
+        // Construct the reset link with the token
+        $reset_link = "https://localhost/derma101/reset-password.php?token=" . $token;
+        
+        // Email message with the reset link
+        $message = "To reset your password, click <a href='$reset_link'>here</a>.";
+        
+        // PHPMailer configuration
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->SMTPDebug  = 0;
+        $mail->SMTPAuth   = TRUE;
+        $mail->SMTPSecure = "tls";
+        $mail->Port       = 587;
+        $mail->Host       = "smtp.gmail.com"; // Update with your SMTP host
+        $mail->Username   = "itsderma101@gmail.com"; // Update with your email address
+        $mail->Password   = "epegjdmbihwnauyf"; // Update with your email password
+
+        // Email content setup
+        $mail->IsHTML(true);
+        $mail->AddAddress($recipient, "Esteemed Customer");
+        $mail->SetFrom("itsderma101@gmail.com", "Derma101");
+        $mail->Subject = $subject;
+        $mail->MsgHTML($message);
+
+        // Send email
+        if(!$mail->Send()) {
+            return false; // Return false if email sending fails
+        } else {
+            return true; // Return true if email sent successfully
+        }
+    }
+
+    // Database connection setup
+    include "db_connection.php";
+
+    $success_message = "";
+    $error_message = "";
+
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Collect the email
+        $email = $_POST["email"];
+        
+        // Generate a unique token
+        $token = uniqid();
+        
+        // Save the token in the database
+        $sql = "UPDATE tblusers SET reset_token='$token' WHERE email='$email'";
+        
+        if ($conn->query($sql) === TRUE) {
+            // Send the token link to the user's email
+            $subject = "Password Reset";
+            
+            if(send_mail($email, $subject, $token)) {
+                $success_message = "Reset token sent successfully.";
+            } else {
+                $error_message = "Error sending reset token.";
+            }
+        } else {
+            $error_message = "Error updating record: " . $conn->error;
+        }
+    }
+
+    $conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +128,7 @@
             width: 70px;
             height: auto;
             display: block;
-            margin-top: 35%;
+            margin-top: 45%;
             margin-left: 20px;
         }
 
@@ -75,6 +152,7 @@
             color:black;
             margin-left: 28px;
             margin-right: 15px;
+            margin-bottom: 150px;
         }
 
         .lower-panel {
@@ -100,7 +178,7 @@
             font-size: 13px;
             color: black;
             text-align: left;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .form-group {
@@ -184,14 +262,14 @@
                 <p class="title">Forgot Password</p>
                 <p class="tagline-right">There is nothing to worry about; we'll send you a message to help you reset your password.</p>
                 <div class="form-group">
-                    <form method="POST" action="send-password-reset.php">
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="Enter email" required>
                         <button class="reset-btn" type="submit">Send Reset Link</button>
+                        <div class="success-message"><?php echo $success_message; ?></div>
+                        <div class="error-message"><?php echo $error_message; ?></div>
                     </form>
                 </div>
-                <!-- no backend -->
-                <!-- <p class="link" style="margin-top: -10px; margin-bottom: 15px;">Resend email</p> -->
                 <p class="link" style="margin-bottom: 50px">Already have an account? <a href="login.php" style="color: #be9355;">Login</a></p>
             </div>
         </div>
