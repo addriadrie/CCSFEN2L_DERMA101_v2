@@ -1,151 +1,123 @@
 <?php
-    session_start();
-    // Function para sa pag-check kung ang email ay naverify na
-    function check_verified()
-    {
-        if (isset($_SESSION['USER'])) {
-            $id = $_SESSION['USER']->id;
+    function login($inputEmail, $inputPassword, &$errors) {
+        // Database connection parameters
+        $servername = "localhost";
+        $username = "root";
+        $dbPassword = "";
+        $dbname = "db_derma";
 
-            // Query to check if the user's email is verified
-            $query = "SELECT * FROM tblusers WHERE patientID = :id AND email = email_verified LIMIT 1";
-            $vars = array(':id' => $id);
-            $row = database_run($query, $vars);
+        try {
+            // Create a new PDO instance
+            $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbPassword);
+            // Set the PDO error mode to exception
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // Check if query returned a row
-            if ($row) {
-                return true; // User's email is verified
-            }
-        }
+            // Sanitize the inputs
+            $email = filter_var($inputEmail, FILTER_SANITIZE_EMAIL);
 
-        return false; // User's email is not verified or session user is not set
-    }
+            // Query to fetch user from the database
+            $query = "SELECT * FROM tblusers WHERE LOWER(email) = LOWER(:email) LIMIT 1"; // Case-insensitive email comparison
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    function check_login($redirect = true)
-    {
-        if (isset($_SESSION['USER']) && isset($_SESSION['LOGGED_IN'])) {
-            return true; // User is logged in
-        }
-
-        if ($redirect) {
-            header("Location: login.php"); // Redirect to login page if user is not logged in
-            die;
-        } else {
-            return false; // User is not logged in
-        }
-    }
-
-
-    function login($data)
-    {
-        $errors = array();
-
-        // Validate email
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Please enter a valid email";
-        }
-
-        // Validate password length
-        if (strlen(trim($data['password'])) < 8) {
-            $errors[] = "Password must be at least 4 chars long";
-        }
-
-        // Check for errors
-        if (count($errors) == 0) {
-            $arr['email'] = $data['email'];
-            $password = hash('sha256', $data['password']);
-
-            $query = "SELECT * FROM user WHERE email = :email LIMIT 1";
-
-            $row = database_run($query, $arr);
-
-            if (is_array($row)) {
-                $row = $row[0];
-
-                if ($password === $row->password) {
-                    $_SESSION['USER'] = $row;
-                    $_SESSION['LOGGED_IN'] = true;
-
+            if ($user) {
+                // Verify the password
+                if (password_verify($inputPassword, $user['password'])) {
+                    // Password is correct
+                    // Set session variables
+                    $_SESSION['user_id'] = $user['userID'];
+                    $_SESSION['email'] = $user['email'];
+                    return true; // Login successful
                 } else {
-                    $errors[] = "Wrong email or password";
+                    // Invalid password
+                    $errors[] = "Invalid email or password"; // Login failed
                 }
-
             } else {
-                $errors[] = "Wrong email or password";
+                // User not found
+                $errors[] = "User not found"; // Login failed
             }
+        } catch(PDOException $e) {
+            // Handle database connection error
+            $errors[] = "Connection failed: " . $e->getMessage();
         }
 
-        return $errors;
-    }
-    
-    function signup($data) {
-        $errors = array();
-
-        // validate
-        if (!preg_match('/^[a-zA-Z\s]+$/', $data['fname']) || !preg_match('/^[a-zA-Z\s]+$/', $data['Midname']) || !preg_match('/^[a-zA-Z\s]+$/', $data['lname'])) {
-            $errors[] = "Please enter valid first name, middle name, and last name";
-        }
-
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Please enter a valid email";
-        }
-
-        if (strlen(trim($data['password'])) < 8) {
-            $errors[] = "Password must be at least 8 chars long";
-        }
-        $check = database_run("SELECT * FROM tblusers WHERE email = :email LIMIT 1", ['email' => $data['email']]);
-        if (is_array($check)) {
-            $errors[] = "That email already exists";
-        }
-
-        // save
-        if (count($errors) == 0) {
-            $firstName = $data['fname'];
-            $middleName = $data['Midname'];
-            $lastName = $data['lname'];
-            $email = $data['email'];
-            $password = hash('sha256', $data['password']);
-            $date = date("Y-m-d H:i:s");
-
-            $query = "INSERT INTO tblusers (firstName, middleName, lastName, email, password, date) VALUES (:firstName, :middleName, :lastName, :email, :password, :date)";
-
-            $arr = array(
-                'firstName' => $firstName,
-                'middleName' => $middleName,
-                'lastName' => $lastName,
-                'email' => $email,
-                'password' => $password,
-                'date' => $date
-            );
-
-            database_run($query, $arr);
-        }
-
-        return $errors;
+        return false; // Login failed
     }
 
+
+    function getUserByEmail($email) {
+        global $conn;
+        
+        $email = mysqli_real_escape_string($conn, $email);
+        $query = "SELECT * FROM tblusers WHERE email = '$email' LIMIT 1";
+        $result = $conn->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
+            return false;
+        }
+    }
 
     function database_run($query, $vars = array())
     {
-        $string = "mysql:host=localhost;dbname=db_derma";
+        $con = new mysqli('localhost', 'root', '', 'db_derma101');
 
-        try {
-            $con = new PDO($string, 'root', '');
-            $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        if ($con->connect_error) {
+            die("Connection failed: " . $con->connect_error);
+        }
 
-            $stm = $con->prepare($query);
-            $check = $stm->execute($vars);
+        $stm = $con->prepare($query);
+        if ($stm) {
+            if (!empty($vars)) {
+                $types = str_repeat('s', count($vars));
+                $stm->bind_param($types, ...$vars);
+            }
+            $check = $stm->execute();
 
             if ($check) {
-                $data = $stm->fetchAll(PDO::FETCH_OBJ);
+                $result = $stm->get_result();
+                $data = $result->fetch_all(MYSQLI_ASSOC);
 
                 if (count($data) > 0) {
                     return $data;
                 }
             }
+        }
 
+        return false;
+    }
+
+    function check_verified()
+    {
+        $id = $_SESSION['USER']->userID;
+        $query = "SELECT * FROM tblusers WHERE userID = ? LIMIT 1";
+        $vars = array($id);
+        $row = database_run($query, $vars);
+
+        if (is_array($row)) {
+            $row = $row[0];
+
+            if ($row['email'] == $row['email_verified']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function check_login($redirect = true) {
+        if (isset($_SESSION['USER']) && isset($_SESSION['LOGGED_IN'])) {
+            return true;
+        }
+
+        if ($redirect) {
+            header("Location: login.php");
+            exit();
+        } else {
             return false;
-        } catch (PDOException $e) {
-            die("Error: " . $e->getMessage());
         }
     }
 ?>
