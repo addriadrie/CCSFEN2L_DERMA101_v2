@@ -4,7 +4,7 @@
     $pntID = $_GET['patientID']; // fetched ID
     $svcID = $_GET['serviceID']; // fetched ID
 
-    // get patient info
+    // get patient info to print in form
     $sql = "SELECT patientID, firstName, middleName, lastName, email FROM tblusers WHERE patientID='$pntID';"; 
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
@@ -14,13 +14,32 @@
     $lname = $row["lastName"];
     $email = $row["email"];
 
-    // get service info
+    // get service info to print in form
     $sql = "SELECT tblservice.serviceID, tblservice.serviceName, tblcategory.categName FROM tblservice INNER JOIN tblcategory WHERE serviceID='$svcID';"; 
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     $serviceID = $row["serviceID"];
     $svcName = $row["serviceName"];
     $ctgName = $row["categName"];
+
+    
+    if(isset($_POST['submit'])){
+        // fetching date and note upon submission
+        $date=$_POST['date'];
+        $note=$_POST['note'];
+
+        // inserting to appointment table
+        $sql="INSERT INTO tblappt(patientID, serviceID, apptDate, patientNote, statusID) VALUES ($patientID,'$serviceID', '$date', '$note', 1)";
+        $result = $conn->query($sql);
+
+        // if successful insertion
+        if ($result) {
+            header('location: patient-appt.php');
+        } else {
+            die("Connection failed: " . $mysqli->connect_error);          
+        }
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -216,45 +235,48 @@
             <div class="col-md-8">
                 <div class="service-row">
                     <div class="form-group col-md-6">
-                        <input class="form-control" type="text" value="<?php echo $ctgName ?>" aria-label="Disabled input example" disabled readonly name="ctgName">
+                        <input class="form-control" type="text" value="<?php echo $ctgName ?>" aria-label="Disabled input example" disabled readonly id="ctgName">
                     </div>
                     <div class="form-group col-md-6">
-                        <input class="form-control" type="text" value="<?php echo $svcName ?>" aria-label="Disabled input example" disabled readonly name="svcName"> 
+                        <input class="form-control" type="text" value="<?php echo $svcName ?>" aria-label="Disabled input example" disabled readonly id="svcName"> 
                     </div>
                 </div>
                 <div class="name-row">
                     <div class="form-group col-md-4">
                         <label class="form-label">First Name</label>
-                        <input type="text" class="form-control" value="<?php echo $fname ?>" id="fname">
+                        <input type="text" class="form-control" value="<?php echo $fname ?>" aria-label="Disabled input example" disabled readonly id="fname">
                     </div>
                     <div class="form-group col-md-4">
                         <label class="form-label">Middle Name</label>
-                        <input type="text" class="form-control" value="<?php echo $midname ?>" id="midname">
+                        <input type="text" class="form-control" value="<?php echo $midname ?>" aria-label="Disabled input example" disabled readonly id="midname">
                     </div>
                     <div class="form-group col-md-4">
                         <label class="form-label">Last Name</label>
-                        <input type="text" class="form-control" value="<?php echo $lname ?>" id="lname">
+                        <input type="text" class="form-control" value="<?php echo $lname ?>" aria-label="Disabled input example" disabled readonly id="lname">
+                    </div>
+                </div>
+                <div class="email-row">
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="text" class="form-control" value="<?php echo $email ?>" aria-label="Disabled input example" disabled readonly id="email">  
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Select Date</label>
+                        <input type="date" class="form-control" min="<?php echo date("Y-m-d"); ?>" id="date" required>
                     </div>
                 </div>
                 <div class="third-row">
                     <div class="form-group col-md-12">
-                        <label class="form-label">Email</label>
-                        <input type="text" class="form-control" value="<?php echo $email ?>" id="email">
-                        <div class="alert alert-info">
-                            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Please make sure all the information is correct as you won’t be able to edit once confirmed.
-                        </div>
+                        <label class="form-label">Additional Note</label>
+                        <textarea class="form-control" placeholder="Please indicate any special instructions such as allergies, pregnancy, and the like." id="note" style="font-size: 13px; height: 120px;"></textarea>
+                        
                     </div>
                 </div>
-                <button type="submit" class="button">Confirm</button>
+                <button type="submit" class="button" name="submit">Confirm</button>
             </div>
             <!-- One-third width column -->
             <div class="col-md-4">
-                <div class="date-form">
-                    <div class="form-group col-md-12">
-                        <input type="date" class="form-control" min="<?php echo date("Y-m-d"); ?>" id="date">
-                    </div>
-                </div>
-                <div class="schedule" style="margin-top:15%; background-color: #f4f5f6;">
+                <div class="schedule" style="background-color: #f4f5f6;">
                     <br>
                     <p class="sched-title">MON - SAT</p>
                     <p class="sched-time"><b>10:00AM - 8:00PM</b><br>Walk-In and Appointment</p>
@@ -264,11 +286,11 @@
                     <p class="sched-note">Appointment for consultation</p>
                     <br>
                 </div>
+                <div class="alert alert-info">
+                    <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Please be informed that confirmed appointments can not be cancelled. For queries, contact us through the provided information below.
+                </div>
             </div>
         </div>
-
-
-
     </div>
       
     <br><br><br><br><br>
