@@ -1,17 +1,74 @@
 <?php
+    include("db_connection.php");
 
-    require "Efunctions.php";
-    $errors = array();
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    require 'PHPMailer-master/src/Exception.php';
+    require 'PHPMailer-master/src/PHPMailer.php';
+    require 'PHPMailer-master/src/SMTP.php';
+    // Function to generate a random verification code
+    function generateVerificationCode() {
+        return rand(100000, 999999); // Generate a random 6-digit code
 
-    if($_SERVER['REQUEST_METHOD'] == "POST")
-    {
-        $errors = signup($_POST);
-        if(count($errors) == 0)
-        {
-            header("Location: login.php");
-            die;
+    }
+    // Hash the password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Function to send email
+    function sendVerificationEmail($recipient, $subject, $message) {
+        $mail = new PHPMailer();
+        // Configuration for SMTP
+        $mail->IsSMTP();
+        $mail->SMTPDebug  = 0; // Set to 2 for debugging
+        $mail->SMTPAuth   = TRUE;
+        $mail->SMTPSecure = "tls";
+        $mail->Port       = 587;
+        $mail->Host       = "smtp.gmail.com"; // Update this with your SMTP server
+        $mail->Username   = "itsderma101@gmail.com"; // Update with your email address
+        $mail->Password   = "epegjdmbihwnauyf"; // Update with your email password
+
+        $mail->IsHTML(true);
+        $mail->AddAddress($recipient);
+        $mail->SetFrom("itsderma101@gmail.com", "Derma101");
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+
+        if(!$mail->Send()) {
+            return false;
+        } else {
+            return true;
         }
     }
+
+    // Handle form submission
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $fname = $_POST['fname'];
+        $Midname = $_POST['Midname'];
+        $lname = $_POST['lname'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        // Generate verification code
+        $verificationCode = generateVerificationCode();
+
+        // Insert data into database
+        $sql = "INSERT INTO tblusers (firstName, middleName, lastName, email, password, verification_code) VALUES ('$fname', '$Midname', '$lname', '$email', '$password', '$verificationCode')";
+
+        if ($conn->query($sql) === TRUE) {
+            // Send verification email
+            if (sendVerificationEmail($email, "Verify Your Email", "Your verification code is: $verificationCode")) {
+                // Redirect to verify-account.php
+                header("Location: verify-account.php");
+                exit();
+            } else {
+                echo "Error sending verification email.";
+            }
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+
+    $conn->close();
 ?>
 
 
@@ -230,13 +287,11 @@
 </head>
 
 <body>
-	<div>
-		<?php if(count($errors) > 0):?>
-			<?php foreach ($errors as $error):?>
-				<?= $error?> <br>
-			<?php endforeach;?>
-		<?php endif;?>
-    </div>
+    <?php if (!empty($errors)): ?>
+        <?php foreach ($errors as $error): ?>
+            <?= $error ?> <br>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     <div class="signup-container">
         <div class="signup-panels">
@@ -248,14 +303,14 @@
             <div class="signup-panel signup-lower-panel">
                 <p class="welcome">Create Your Account</p>
                 <p class="tagline-welcome">It's Free and Easy</p>
-                <form method="post">
+                <form method="post" action="" onsubmit="return validateForm()">
                     <div class="signup-form-group">
                         <!-- <label for="fname">First Name</label> -->
                         <input type="text" id="fname" name="fname" placeholder="First Name" required>
                     </div>
                     <div class="signup-form-group">
                         <!-- <label for="Midname">Middle Name </label> -->
-                        <input type="text" id="Midname" name="Midname" placeholder="Middle name" required>
+                        <input type="text" id="Midname" name="Midname" placeholder="Middle name">
                     </div>
                     <div class="signup-form-group">
                         <!-- <label for="lname">Last Name</label> -->
@@ -286,7 +341,27 @@
         </div>
     </div>
 
+    <!-- Modal for success message -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modalMessage"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript for modal functionality -->
     <script>
+        function openModal(message) {
+            var modal = document.getElementById('successModal');
+            document.getElementById('modalMessage').innerHTML = message;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('successModal');
+            modal.style.display = 'none';
+        }
+
         function validateForm() {
             var password = document.getElementById('password').value;
 
