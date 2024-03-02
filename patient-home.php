@@ -7,6 +7,7 @@
     $row = $result->fetch_assoc();
     $id = $row["patientID"];
     $fname = $row["firstName"];
+
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +45,7 @@
 
         .nav-link:hover {
             color: black;
+            text-decoration: none;
         }
 
         .greeting {
@@ -158,12 +160,12 @@
             font-family: Poppins;
             font-weight: bold;
             color: #BE9355;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .footer-icons {
             float: right;
-        }
+        }   
     </style>
 
     <title>Derma 101</title>
@@ -177,12 +179,12 @@
         <div class="container">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="guest-index.php">
+                    <a class="nav-link" href="#">
                     <img src="images/LOGO.png" alt="Derma101" height="30">
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="patient-home.php" style="color: #BE9355;">Home</a>
+                    <a class="nav-link active" aria-current="page" href="#" style="color: #BE9355;">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link smooth-scroll" href="#services">Services</a>
@@ -224,7 +226,7 @@
     <br><br>
 
     <!-- RECOMMENDED -->       
-    <div class="container">
+    <div class="container" id="services">
         <p style="font-family:Poppins; text-align:center; color:#D3D3D3; margin-bottom:auto; font-size:20px;">Most Popular</p>
         <p style="font-family:DM Sans; text-align:center; color:#BE9355; font-weight:bold; font-size:24px">Recommended Services</p>
             <?php
@@ -239,7 +241,7 @@
                             <div class="card">
                                 <img src="data:image/jpeg;base64,'.base64_encode($row['image']).'"/ class="card-img-top">
                                 <div class="card-body">
-                                    <a class="card-title" href="patient-booking.php?patientID='.$id.'?serviceID='.$row["serviceID"].'">' . $row["serviceName"] . '</a>
+                                    <a class="card-title" href="patient-booking.php?patientID='.$id.'&serviceID='.$row['serviceID'].'">' . $row["serviceName"] . '</a>
                                     <div class="row justify-content-between">
                                         <p class="card-fee">' . $row["serviceFee"] . ' </p>
                                         <p class="card-sub"> ' . $row["categName"] . ' </p>                                        
@@ -459,7 +461,7 @@
                                 <a href="https://www.derma101ph.com" style="color: #BE9355;"><i class="fa fa-globe fa-2x" aria-hidden="true"></i></a>                  
                             </div>
                         </p> <br><br><br><br>
-                        <p class="footer-copyright" style="text-align: right; color: #C0C0C0; font-size: 14px;">Copyright © 2024. All rights reserved.</p>
+                        <p class="footer-copyright" style="text-align: right; color: #C0C0C0; font-size: 12px;">Copyright © 2024. All rights reserved.</p>
                     </div>
                 </div>           
             </div>     
