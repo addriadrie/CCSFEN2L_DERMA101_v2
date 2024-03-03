@@ -190,7 +190,7 @@
                     <a class="nav-link smooth-scroll" href="#services">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="patient-appt.php">Appointments</a>
+                    <a class="nav-link" href="patient-appt.php?patientID=<?php echo $id ?>">Appointments</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link smooth-scroll" href="#contact">Contact</a>
@@ -285,7 +285,7 @@
                                 <div class="card">
                                     <img src="data:image/jpeg;base64,'.base64_encode($row['image']).'"/ class="card-img-top">
                                     <div class="card-body">
-                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'?serviceID='.$row["serviceID"].'">' . $row["serviceName"] . '</a>
+                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'&serviceID='.$row['serviceID'].'">' . $row["serviceName"] . '</a>
                                         <div class="row justify-content-between">
                                             <p class="card-fee">' . $row["serviceFee"] . ' </p>
                                             <p class="card-sub"> ' . $row["categName"] . ' </p>                                        
@@ -313,7 +313,7 @@
                                 <div class="card">
                                     <img src="data:image/jpeg;base64,'.base64_encode($row['image']).'"/ class="card-img-top">
                                     <div class="card-body">
-                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'?serviceID='.$row["serviceID"].'">' . $row["serviceName"] . '</a>
+                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'&serviceID='.$row['serviceID'].'">' . $row["serviceName"] . '</a>
                                         <div class="row justify-content-between">
                                             <p class="card-fee">' . $row["serviceFee"] . ' </p>
                                             <p class="card-sub"> ' . $row["categName"] . ' </p>                                        
@@ -341,7 +341,7 @@
                                 <div class="card">
                                     <img src="data:image/jpeg;base64,'.base64_encode($row['image']).'"/ class="card-img-top">
                                     <div class="card-body">
-                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'?serviceID='.$row["serviceID"].'">' . $row["serviceName"] . '</a>
+                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'&serviceID='.$row['serviceID'].'">' . $row["serviceName"] . '</a>
                                         <div class="row justify-content-between">
                                             <p class="card-fee">' . $row["serviceFee"] . ' </p>
                                             <p class="card-sub"> ' . $row["categName"] . ' </p>                                        
@@ -369,7 +369,7 @@
                                 <div class="card">
                                     <img src="data:image/jpeg;base64,'.base64_encode($row['image']).'"/ class="card-img-top">
                                     <div class="card-body">
-                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'?serviceID='.$row["serviceID"].'">' . $row["serviceName"] . '</a>
+                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'&serviceID='.$row['serviceID'].'">' . $row["serviceName"] . '</a>
                                         <div class="row justify-content-between">
                                             <p class="card-fee">' . $row["serviceFee"] . ' </p>
                                             <p class="card-sub"> ' . $row["categName"] . ' </p>                                        
@@ -397,7 +397,7 @@
                                 <div class="card">
                                     <img src="data:image/jpeg;base64,'.base64_encode($row['image']).'"/ class="card-img-top">
                                     <div class="card-body">
-                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'?serviceID='.$row["serviceID"].'">' . $row["serviceName"] . '</a>
+                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'&serviceID='.$row['serviceID'].'">' . $row["serviceName"] . '</a>
                                         <div class="row justify-content-between">
                                             <p class="card-fee">' . $row["serviceFee"] . ' </p>
                                             <p class="card-sub"> ' . $row["categName"] . ' </p>                                        
@@ -425,7 +425,7 @@
                                 <div class="card">
                                     <img src="data:image/jpeg;base64,'.base64_encode($row['image']).'"/ class="card-img-top">
                                     <div class="card-body">
-                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'?serviceID='.$row["serviceID"].'">' . $row["serviceName"] . '</a>
+                                        <a class="card-title" href="patient-booking.php?patientID='.$id.'&serviceID='.$row['serviceID'].'">' . $row["serviceName"] . '</a>
                                         <div class="row justify-content-between">
                                             <p class="card-fee">' . $row["serviceFee"] . ' </p>
                                             <p class="card-sub"> ' . $row["categName"] . ' </p>                                        
@@ -469,6 +469,7 @@
     </footer>
 
     <script>
+        // services tabs
         const tabs = document.querySelectorAll('[data-tab-target]')
         const tabContents = document.querySelectorAll('[data-tab-content]')
 

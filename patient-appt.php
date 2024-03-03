@@ -97,7 +97,6 @@
         .footer {
             background-color: #f4f5f6;
             font-family: DM Sans;
-            position: absolute;
             bottom: 0;
             left: 0;
         }
