@@ -56,8 +56,32 @@
         }
 
         .dropdown-menu {
+            width: max-content;
             font-family: DM Sans;
-            font-size: 13px;
+            border-radius: 10px;
+        }
+
+        .dropdown-name {
+            font-family: 'Poppins';
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px;
+            padding-top: 5px;
+            padding-bottom: 0;
+        }
+
+        .dropdown-email {
+            font-family: 'Poppins';
+            font-size: 11px;
+            color: #999999;
+            padding: 10px; 
+            padding-top: 0;
+        }
+
+        .dropdown-divider {
+            color: #f5f5f5;
+            margin: 0 auto;         
+            width: 85%;
         }
 
         .card {
@@ -143,13 +167,16 @@
                 <li class="nav-item greeting">Hi, <?php echo $fname ?></li>
                 <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: #BE9355"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item disabled" aria-disabled="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;Edit Profile</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="guest-index.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;Logout</a></li>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="dropdown-name"><?php echo $fname . " " . $lname ?></li>
+                        <li class="dropdown-email"><?php echo $email ?></li>
+                        <div class="dropdown-divider"></div>
+                        <li class="dropdown-link"><a class="dropdown-item disabled" aria-disabled="true"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;Profile</a></li>
+                        <div class="dropdown-divider"></div>                   
+                        <li class="dropdown-link"><a href="guest-index.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;Logout</a></li>
                     </ul>
                 </li>
-            </ul> 
+            </ul>
         </div>
     </nav>
 
