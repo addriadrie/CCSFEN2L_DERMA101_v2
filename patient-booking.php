@@ -107,7 +107,7 @@
             margin-top: 10%;
         }
 
-                .dropdown-menu {
+        .dropdown-menu {
             width: max-content;
             font-family: DM Sans;
             border-radius: 10px;
@@ -236,7 +236,7 @@
                     <a class="nav-link" href="patient-home.php?patientID=<?php echo $patientID ?>">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="patient-appt.php?patientID=<?php echo $id ?>">Appointments</a>
+                    <a class="nav-link" href="patient-appt.php?patientID=<?php echo $patientID ?>">Appointments</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link smooth-scroll" href="#contact">Contact</a>
