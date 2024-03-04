@@ -4,7 +4,7 @@
     $id = $_GET['patientID']; // fetched ID
 
     // get patient info to print in form
-    $sql = "SELECT patientID, firstName, middleName, lastName, email, dateOfBirth, sex, bloodType FROM tblusers WHERE patientID='$id';"; 
+    $sql = "SELECT patientID, firstName, middleName, lastName, email, dateOfBirth, sex, bloodType, password FROM tblusers WHERE patientID=$id;"; 
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     $id = $row["patientID"];
@@ -15,21 +15,23 @@
     $dob = $row["dateOfBirth"];
     $sex = $row["sex"];
     $blood = $row["bloodType"];
+    $password = $row["password"];
 
     //changing user info
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-         // fetching info upon submission
-        $newfname = $_POST["fname"];
-        $newmidname = $_POST["midname"];
-        $newlname = $_POST["lname"];
-        $newsex = $_POST["sex"];
-        $newblood = $_POST["blood"];
-        $newdob = $_POST["dob"];
-        $newemail = $_POST["email"];
+    if($_SERVER["REQUEST_METHOD"] == "GET"){
+        // fetching info upon submission
+        $newfname = $_GET["fname"];
+        $newmidname = $_GET["midname"];
+        $newlname = $_GET["lname"];
+        $newsex = $_GET["sex"];
+        $newblood = $_GET_GET["blood"];
+        $newdob = $_GET["dob"];
+        $newemail = $_GET["email"];
+        $newpass = $_GET["password"];
 
         // comparing info submitted before updating
-        if ($newfname != $fname || $newmidname != $midname || $newlname != $lname || $newsex != $sex || $newblood != $blood || $newdob != $dob || $newemail != $email) {
-            $updatesql = "UPDATE tblusers SET firstName = '$newfname', middleName = '$newmidname', lastName = '$newlname', sex = '$newsex', bloodType = '$newblood', dateOfBirth = '$newdob', email = '$newemail' WHERE patientID = $id";
+        if ($newfname != $fname || $newmidname != $midname || $newlname != $lname || $newsex != $sex || $newblood != $blood || $newdob != $dob || $newemail != $email || $newpass != $password) {
+            $updatesql = "UPDATE tblusers SET firstName = '$newfname', middleName = '$newmidname', lastName = '$newlname', sex = '$newsex', bloodType = '$newblood', dateOfBirth = '$newdob', email = '$newemail', password = '$newpass' WHERE patientID = '$id'";
             $updateresult = $conn->query($updatesql);
             if ($updateresult) {         
                 header('location: patient-profile.php?patientID='.$id);
@@ -132,7 +134,7 @@
             font-size: 16px;
         }
 
-        .button {
+        .btn-submit {
             font-family: "DM Sans";
             color: white;
             background-color: #BE9355;
@@ -141,6 +143,19 @@
             border-color: transparent;
             float: right;
             margin-top: 15px;
+            margin-right: 15px;
+        }
+
+        .btn-pass {
+            font-family: "DM Sans";
+            font-weight: bold;
+            color: #BE9355;
+            border-radius: 12px;
+            padding: 6px;  
+            border-color: #BE9355;
+            background-color: white;
+            float: right;
+            margin-top: 25px;
             margin-right: 15px;
         }
 
@@ -209,27 +224,27 @@
     <p style="font-family:DM Sans; text-align:center; color:#BE9355; font-weight:bold; font-size:24px">Profile</p>
     <br>
 
-    <form method="post">
-        <div class="container">       
+    <form method="get">
+        <div class="container" style="width: 70%;">       
             <p class="form-title">Personal Information</p>
             <div>
                 <div class="form-group col-md-4">
                     <label class="form-label">FIRST NAME</label>
-                    <input type="text" class="form-control" value="<?php echo $fname ?>" name="fname">
+                    <input type="text" class="form-control" value="<?php echo $fname ?>" name="fname" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label">MIDDLE NAME</label>
-                    <input type="text" class="form-control" value="<?php echo $midname ?>" name="midname">
+                    <input type="text" class="form-control" value="<?php echo $midname ?>" name="midname" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label">LAST NAME</label>
-                    <input type="text" class="form-control" value="<?php echo $lname ?>" name="lname">
+                    <input type="text" class="form-control" value="<?php echo $lname ?>" name="lname" required>
                 </div>
             </div>
             <div>           
                 <div class="form-group col-md-6">
                     <label class="form-label">SEX</label>
-                    <select class="form-select" aria-label="Default select example" name="sex">
+                    <select class="form-select" aria-label="Default select example" name="sex" required>
                         <option selected><?php
                             if($sex=='F'){ ?> 
                                 <option selected>Female</option> 
@@ -242,38 +257,31 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">BLOOD TYPE</label>
-                    <input type="text" class="form-control" value="<?php echo $blood ?>" name="blood">
+                    <input type="text" class="form-control" value="<?php echo $blood ?>" name="blood" required>
                 </div>
             </div>
             <div>
                 <div class="form-group col-md-6">
                     <label class="form-label">DATE OF BIRTH</label>
-                    <input type="date" class="form-control" value="<?php echo $dob ?>" name="dob">
+                    <input type="date" class="form-control" value="<?php echo $dob ?>" name="dob" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">EMAIL</label>
-                    <input type="email" class="form-control" value="<?php echo $email ?>" name="email">
+                    <input type="email" class="form-control" value="<?php echo $email ?>" name="email" required>
                 </div>
             </div>
-            <button type="submit" class="button" name="submit">Update Profile</button>
+            <button type="submit" class="btn-submit" name="submit">Update Profile</button>
         </div>
-    </form>
-
-    <br><br>
-
-        <div class="container">
+        <br><br>
+        <div class="container" style="width: 70%;">
             <p class="form-title">Security</p>
             <div class="form-group col-md-8">
                 <label class="form-label">CHANGE PASSWORD</label>
-                <input type="text" class="form-control" name="password">
+                <input type="password" class="form-control" name="password" style="width: 125%;" required>
             </div>
-            <div class="form-group col-md-4">
-                <label class="form-label">CHANGE PASSWORD</label>
-                <input type="text" class="form-control" value="<?php echo $fname ?>" name="fname">
-            </div>
+            <button type="submit" class="btn-pass" id="password" name="submit">Update Password</button>
         </div>
-        
-
+    </form>
 
     <br><br><br><br>
 
@@ -303,6 +311,20 @@
             </div>     
         </div>           
     </footer>
+
+    <script>
+        document.getElementById('password').addEventListener('click', function() {
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters");
+                return false; // Prevent form submission
+            } else {
+                var confirmation = confirm('Are you sure you want to change password?');
+                if (confirmation) {
+                alert('You successfully changed password!');
+                }
+            }
+        });
+    </script>
     
 </body>
 </html>
