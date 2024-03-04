@@ -2,11 +2,14 @@
     include('db_connection.php');
 
     $id = $_GET['patientID']; // fetched ID
-    $sql = "SELECT patientID, firstName FROM tblusers WHERE patientID='$id';"; 
+    $sql = "SELECT patientID, firstName, middleName, lastName, email FROM tblusers WHERE patientID='$id';"; 
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     $id = $row["patientID"];
     $fname = $row["firstName"];
+    $midname = $row["middleName"];
+    $lname = $row["lastName"];
+    $email = $row["email"];
 
 ?>
 
