@@ -30,7 +30,19 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <style>
+    <style> 
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            flex: 1;
+        }
+
         .nav-item {
             font-family: DM Sans;
             font-weight: bold;
@@ -126,7 +138,6 @@
             font-family: DM Sans;
             bottom: 0;
             left: 0;
-            position: fixed;
         }
         
         .footer-title {
@@ -193,53 +204,56 @@
         if (!$result) { die("Invalid Query: " . $conn->connect_error);}
     ?>
 
-    <div class="container"> <?php
-        while($row = $result->fetch_assoc()) {
-            $apptID = $row["apptID"];
-            $date = $row["apptDate"];
-            $formattedDate = date("l, F j, Y", strtotime($date));
-            $svcID = $row["serviceID"];           
-            $note = $row["patientNote"];
-            $statusID = $row["statusID"];
+    <div class="wrapper">
+        <div class="container"> <?php
+            while($row = $result->fetch_assoc()) {
+                $apptID = $row["apptID"];
+                $date = $row["apptDate"];
+                $formattedDate = date("l, F j, Y", strtotime($date));
+                $svcID = $row["serviceID"];           
+                $note = $row["patientNote"];
+                $statusID = $row["statusID"];
 
-            echo '
-                <div class="card">
-                    <p class="card-header">'.$formattedDate.'</p>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <p class="title">APPOINTMENT ID</p>
-                                <p class="sub">'.$apptID.'</p>
+                echo '
+                    <div class="card">
+                        <p class="card-header">'.$formattedDate.'</p>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p class="title">APPOINTMENT ID</p>
+                                    <p class="sub">'.$apptID.'</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="title">SERVICE</p>
+                                    <p class="sub">'?><?php
+                                    $svcsql = "SELECT serviceName FROM tblservice WHERE serviceID='$svcID';"; 
+                                    $svcresult = $conn->query($svcsql);
+                                    $svcrow = $svcresult->fetch_assoc();
+                                    $svcName = $svcrow["serviceName"];
+                                    echo $svcName;
+                                    ?><?php echo'</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="title">STATUS</p>
+                                    <p class="sub">'?><?php
+                                    $stsql = "SELECT status FROM tblstatus WHERE statusID=$statusID;"; 
+                                    $stresult = $conn->query($stsql);
+                                    $strow = $stresult->fetch_assoc();
+                                    $stName = $strow["status"];
+                                    echo $stName;
+                                    ?><?php echo'</p>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <p class="title">SERVICE</p>
-                                <p class="sub">'?><?php
-                                $svcsql = "SELECT serviceName FROM tblservice WHERE serviceID='$svcID';"; 
-                                $svcresult = $conn->query($svcsql);
-                                $svcrow = $svcresult->fetch_assoc();
-                                $svcName = $svcrow["serviceName"];
-                                echo $svcName;
-                                ?><?php echo'</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="title">STATUS</p>
-                                <p class="sub">'?><?php
-                                $stsql = "SELECT tblstatus.status FROM tblstatus WHERE statusID='$statusID';"; 
-                                $stresult = $conn->query($stsql);
-                                $strow = $stresult->fetch_assoc();
-                                $stName = $strow["status"];
-                                echo $stName;
-                                ?><?php echo'</p>
-                            </div>
+                            <div>
+                                <p class="title" style="padding-left: 38px">NOTE</p>
+                                <p class="sub" style="padding-left: 38px">'.$note.'</p>                                                 
+                            </div>                                    
                         </div>
-                        <div>
-                            <p class="title" style="padding-left: 38px">NOTE</p>
-                            <p class="sub" style="padding-left: 38px">'.$note.'</p>                                                 
-                        </div>                                    
-                    </div>
-                </div> <br>';      
-        } ?>
+                    </div> <br>';      
+            } ?>
+        </div>
     </div>
+    
 
     <br><br><br>
 

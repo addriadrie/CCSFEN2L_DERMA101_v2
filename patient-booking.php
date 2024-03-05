@@ -34,23 +34,22 @@
         $note = $_POST['note'];
 
         // generating appt id
-        $prefix = date("Ymd", strtotime($date));
+        $prefix = date("ymd", strtotime($date));
         $sql = "SELECT MAX(apptID) AS latest FROM tblappt WHERE apptDate = '$date'";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
 
         if ($row['latest'] === null) {
             // No appt made on the current date
-            $count = 1;
-            $length = 3;
-            $apptID = $prefix . str_pad($count, $length, '0', STR_PAD_LEFT);
+            $format = $prefix . "001";
+            $apptID = intval($prefix . "001");
         } else {
             $latest = intval($row['latest']);
             $apptID = $latest +1;
         }
 
         // inserting to appointment table
-        $sql = "INSERT INTO tblappt(apptID, patientID, serviceID, apptDate, patientNote, statusID) VALUES ('$apptID', $patientID,'$serviceID', '$date', '$note', 1)";
+        $sql = "INSERT INTO tblappt(apptID, patientID, serviceID, apptDate, patientNote, statusID) VALUES ($apptID, $patientID,'$serviceID', '$date', '$note', 1)";
         $result = $conn->query($sql);
 
         // if successful insertion
@@ -80,7 +79,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     
     <style>
-    	.nav-item {
+        .nav-item {
             font-family: DM Sans;
             font-weight: bold;
             font-size: 14px;
