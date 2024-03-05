@@ -18,25 +18,24 @@
     $password = $row["password"];
 
     //changing user info
-    if($_SERVER["REQUEST_METHOD"] == "GET"){
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
         // fetching info upon submission
-        $newfname = $_GET["fname"];
-        $newmidname = $_GET["midname"];
-        $newlname = $_GET["lname"];
-        $newsex = $_GET["sex"];
-        $newblood = $_GET_GET["blood"];
-        $newdob = $_GET["dob"];
-        $newemail = $_GET["email"];
-        $newpass = $_GET["password"];
+        $newfname = $_POST["fname"];
+        $newmidname = $_POST["midname"];
+        $newlname = $_POST["lname"];
+        $newsex = $_POST["sex"];
+        $newblood = $_POST["blood"];
+        $newdob = $_POST["dob"];
+        $newemail = $_POST["email"];
 
         // comparing info submitted before updating
         if ($newfname != $fname || $newmidname != $midname || $newlname != $lname || $newsex != $sex || $newblood != $blood || $newdob != $dob || $newemail != $email || $newpass != $password) {
-            $updatesql = "UPDATE tblusers SET firstName = '$newfname', middleName = '$newmidname', lastName = '$newlname', sex = '$newsex', bloodType = '$newblood', dateOfBirth = '$newdob', email = '$newemail', password = '$newpass' WHERE patientID = '$id'";
+            $updatesql = "UPDATE tblusers SET firstName = '$newfname', middleName = '$newmidname', lastName = '$newlname', sex = '$newsex', bloodType = '$newblood', dateOfBirth = '$newdob', email = '$newemail' WHERE patientID = '$id'";
             $updateresult = $conn->query($updatesql);
             if ($updateresult) {         
                 header('location: patient-profile.php?patientID='.$id);
             }
-        }       
+        }
     }
 ?>
 
@@ -155,7 +154,7 @@
             border-color: #BE9355;
             background-color: white;
             float: right;
-            margin-top: 25px;
+            margin-top: 15px;
             margin-right: 15px;
         }
 
@@ -224,7 +223,7 @@
     <p style="font-family:DM Sans; text-align:center; color:#BE9355; font-weight:bold; font-size:24px">Profile</p>
     <br>
 
-    <form method="get">
+    <form method="post">
         <div class="container" style="width: 70%;">       
             <p class="form-title">Personal Information</p>
             <div>
@@ -234,7 +233,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label">MIDDLE NAME</label>
-                    <input type="text" class="form-control" value="<?php echo $midname ?>" name="midname" required>
+                    <input type="text" class="form-control" value="<?php echo $midname ?>" name="midname">
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label">LAST NAME</label>
@@ -257,7 +256,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">BLOOD TYPE</label>
-                    <input type="text" class="form-control" value="<?php echo $blood ?>" name="blood" required>
+                    <input type="text" class="form-control" value="<?php echo $blood ?>" name="blood">
                 </div>
             </div>
             <div>
@@ -273,16 +272,28 @@
             <button type="submit" class="btn-submit" name="submit">Update Profile</button>
         </div>
         <br><br>
-        <div class="container" style="width: 70%;">
-            <p class="form-title">Security</p>
-            <div class="form-group col-md-8">
-                <label class="form-label">CHANGE PASSWORD</label>
-                <input type="password" class="form-control" name="password" style="width: 125%;" required>
-            </div>
-            <button type="submit" class="btn-pass" id="password" name="submit">Update Password</button>
-        </div>
     </form>
 
+
+    <form action="change-password.php?patientID=<?php echo $id ?>"  method="post">      
+        <div class="container" style="width: 70%;">
+        <p class="form-title">Security</p>
+            <div class="form-group col-md-4">
+                <label class="form-label">CURRENT PASSWORD</label><br>
+                <input class="form-control" type="password" id="current_password" name="current_password" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-label">NEW PASSWORD (more than 8 characters):</label><br>
+                <input class="form-control" type="password" id="new_password" name="new_password" minlength="8" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-label">CONFIRM NEW PASSWORD</label><br>
+                <input class="form-control"type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <input class="btn-pass" type="submit" value="Change Password" onclick="showConfirmation()">
+        </div>        
+    </form>
+    
     <br><br><br><br>
 
     <!-- FOOTER -->
@@ -313,17 +324,18 @@
     </footer>
 
     <script>
-        document.getElementById('password').addEventListener('click', function() {
-            if (password.length < 8) {
-                alert("Password must be at least 8 characters");
-                return false; // Prevent form submission
-            } else {
-                var confirmation = confirm('Are you sure you want to change password?');
-                if (confirmation) {
-                alert('You successfully changed password!');
-                }
-            }
-        });
+        function showConfirmation() {         
+            if (new_password.length >= 8) {
+                if (new_password != confirm_password) {
+                    alert('Password do not match. Please try again.');
+                } else {
+                    var result = confirm("Are you sure you want to change password?");
+                    if (result) {
+                        window.location.href = "change-password.php?patientID=".$id;
+                    }
+                }   
+            }            
+        }
     </script>
     
 </body>
