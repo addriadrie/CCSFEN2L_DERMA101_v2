@@ -54,7 +54,10 @@
 
         // if successful insertion
         if ($result) {
-            header('location: patient-appt.php?patientID='.$patientID);
+            //echo "<script>alert('Appointment successfully booked!');</script>";
+            echo "<script>alert('Appointment successfully booked!');
+                window.location.href = 'patient-appt.php?patientID=$patientID';</script>";
+
         } else {
             die("Connection Failed: " . $conn->connect_error);        
         }
