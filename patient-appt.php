@@ -126,6 +126,7 @@
             font-family: DM Sans;
             bottom: 0;
             left: 0;
+            position: fixed;
         }
         
         .footer-title {
@@ -151,7 +152,7 @@
         <div class="container">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="patient-home.php?patientID=<?php echo $id ?>">
                     <img src="images/LOGO.png" alt="Derma101" height="30">
                     </a>
                 </li>
@@ -174,7 +175,7 @@
                         <li class="dropdown-name"><?php echo $fname . " " . $lname ?></li>
                         <li class="dropdown-email"><?php echo $email ?></li>
                         <div class="dropdown-divider"></div>
-                        <li class="dropdown-link"><a class="dropdown-item disabled" aria-disabled="true"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;Profile</a></li>
+                        <li class="dropdown-link"><a href="patient-profile.php?patientID=<?php echo $id ?>"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;Profile</a></li>
                         <div class="dropdown-divider"></div>                   
                         <li class="dropdown-link"><a href="guest-index.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;Logout</a></li>
                     </ul>
