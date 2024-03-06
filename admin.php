@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,9 +42,11 @@
         }
 
         .upper-panel {
-            background: url('nav-image/sidenav-bg.png') center/cover;
+            background-image: url('images/sidenav-bg.png');
+            background-size: cover;
             color: #be9355;
-            border-radius: 10px 10px 0 0; /* Adjust as needed */
+            border-radius: 5px 5px 0 0;
+            margin-left: -15px; 
         }
 
         .logo {
@@ -77,7 +80,7 @@
 
         .lower-panel {
             background: #fff;
-            padding: 30px;
+            padding: 25px;
             border-radius: 0 0 10px 10px; /* Adjust as needed */
             display: flex;
             flex-direction: column;
@@ -89,7 +92,7 @@
             color: #be9355;
             font-weight: bold;
             text-align: left;
-            margin-top: 25%;
+            margin-top: 20%;
             margin-bottom: 5px;
         }
 
@@ -139,8 +142,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 15px;   
-            margin-bottom: 8px;          
+            margin-top: 20px;          
         }
 
         .admin-link {
@@ -148,7 +150,8 @@
             font-size: 12px;
             text-align: center;
             line-height: normal;
-            margin-bottom: 30%;
+            margin-top: 20px;
+            margin-bottom: 20%;
         }
 
         /* Media Queries for Responsive Design */
@@ -178,13 +181,14 @@
     <title>Admin Login</title>
     <link rel="icon" type="image/x-icon" href="images/LOGO.png">
 </head>
+
 <body>
     <div class="container">
         <div class="panels">
             <div class="panel upper-panel">
                 <img src="images/LOGO.png" alt="Logo" class="logo">
-                <p class="join">Join In Derma101</p>
-                <p class="tagline">Derma 101 aims to provide professional excellent dermatological services specializing in both pathologic and cosmetic dermatology upholding the highest ethical standards and quality care.</p>
+                <p class="join">Derma 101</p>
+                <p class="tagline">Admin login panel.</p>
             </div>
             <div class="panel lower-panel">
                 <p class="welcome">Welcome, Admin</p>
@@ -192,11 +196,11 @@
                 <form method="post" action="admin-dashboard.php">
                     <div class="form-group">
                         <label for="email">Username</label>
-                        <input type="text" id="email" name="email" required>
+                        <input type="text" id="email" name="email" placeholder="Enter username" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
                         <a href="forgot_password.php" class="forgot-password">Forgot Password?</a>
                     </div>
                     <button type="submit" class="sign-in-btn">Log In</button>
