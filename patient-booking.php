@@ -253,7 +253,8 @@
                         <li class="dropdown-name"><?php echo $fname . " " . $lname ?></li>
                         <li class="dropdown-email"><?php echo $email ?></li>
                         <div class="dropdown-divider"></div>
-                        <li class="dropdown-link"><a class="dropdown-item disabled" aria-disabled="true"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;Profile</a></li>
+                        <li class="dropdown-link"><a href="patient-profile.php?patientID=<?php echo $patientID ?>"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;Profile</a></li>
+                        <div class="dropdown-divider"></div>
                         <div class="dropdown-divider"></div>                   
                         <li class="dropdown-link"><a href="guest-index.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;Logout</a></li>
                     </ul>
