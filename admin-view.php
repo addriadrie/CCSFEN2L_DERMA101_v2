@@ -44,17 +44,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- BOOTSTRAP --> 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> 
     <!-- FONTAWESOME -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- GOOGLE FONTS -->
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <!-- DROPDOWN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    
 
     <style>
         .nav-item {
@@ -63,6 +63,7 @@
             font-size: 14px;
             margin-left: 10px;
             margin-right: 10px;
+            
         }
 
         .nav-link {
@@ -77,40 +78,12 @@
             text-decoration: none;
         }
 
-        .greeting {
-            color: #BE9355; 
-            font-size: 16px;          
-            font-weight: normal;            
-            margin-top: 10%;
-        }
-
-        .dropdown-menu {
-            width: max-content;
+        .breadcrumb {
             font-family: DM Sans;
-            border-radius: 10px;
-        }
-
-        .dropdown-name {
-            font-family: 'Poppins';
             font-size: 14px;
-            font-weight: bold;
-            padding: 10px;
-            padding-top: 5px;
-            padding-bottom: 0;
-        }
-
-        .dropdown-email {
-            font-family: 'Poppins';
-            font-size: 11px;
-            color: #999999;
-            padding: 10px; 
-            padding-top: 0;
-        }
-
-        .dropdown-divider {
-            color: #f5f5f5;
-            margin: 0 auto;         
-            width: 85%;
+            background-color: #f5f5f5;
+            width: 80%;
+            margin: 0 auto;
         }
 
         .form-title {
@@ -195,18 +168,21 @@
         .footer {
             background-color: #f4f5f6;
             font-family: DM Sans;
+            bottom: 0;
+            left: 0;
         }
         
         .footer-title {
             font-family: Poppins;
             font-weight: bold;
             color: #BE9355;
-            font-size: 16px;
+            font-size: 14px;
+            margin-bottom: 0px;
         }
 
         .footer-icons {
             float: right;
-        }  
+        } 
     </style>
 
     <title>Profile</title>
@@ -215,7 +191,7 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg" style="border-bottom: 1px solid #BE9355;">
         <div class="container">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -241,10 +217,18 @@
         </div>
     </nav>
 
-    <!-- Divider -->
-    <hr class="my-1" style="border-top: 1px solid #BE9355;">
+    <!-- BREADCRUMB -->
+    <div class="container">
+        <br><br>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="admin-patient-list.php">Patients List</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Patient Profile</li>
+            </ol>
+        </nav>
+    </div>
 
-    <br><br><br>
+    <br><br>
 
     <!-- PROFILE -->
     <p style="font-family:DM Sans; text-align:center; color:#BE9355; font-weight:bold; font-size:24px">Profile</p>
@@ -456,24 +440,24 @@
 
     <!-- FOOTER -->
     <footer>
-        <div id="contact" class="footer">
+        <div id="contact" class="footer" style="width: 100%;">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-8">
-                        <br> <br> 
-                        <p class="footer-title">Contact Us</p>
-                        <p class="footer-address" style="font-size: 14px;">2/F 1 Cirq Building, Sen. Lorenzo Sumulong Avenue, Brgy. San Roque, Antipolo, Philippines</p>
                         <br><br>
+                        <p class="footer-title">Contact Us</p>
+                        <p class="footer-address" style="font-size: 13px;">2/F 1 Cirq Building, Sen. Lorenzo Sumulong Avenue, Brgy. San Roque, Antipolo, Philippines</p>
                     </div>
                     <div class="col-6 col-md-4">
                         <p>
+                            <br>
                             <div class=" footer-icons">
-                                <br><br>
-                                <a href="https://www.facebook.com/Derma101" style="color: #BE9355;"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                                <a href="mailto:derma101ph@yahoo.com" style="color: #BE9355;"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                                <a href="https://www.derma101ph.com" style="color: #BE9355;"><i class="fa fa-globe fa-2x" aria-hidden="true"></i></a>                  
+                                <a href="https://www.facebook.com/Derma101" style="color: #BE9355;"><i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                                <a href="mailto:derma101ph@yahoo.com" style="color: #BE9355;"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                                <a href="https://www.derma101ph.com" style="color: #BE9355;"><i class="fa fa-globe fa-lg" aria-hidden="true"></i></a>                  
                             </div>
-                        </p> <br><br><br><br>
+                        </p>
+                        <br>
                         <p class="footer-copyright" style="text-align: right; color: #C0C0C0; font-size: 12px;">Copyright © 2024. All rights reserved.</p>
                     </div>
                 </div>           
@@ -481,20 +465,10 @@
         </div>           
     </footer>
 
-    <script>
-        function showConfirmation() {         
-            if (new_password.length >= 8) {
-                if (new_password != confirm_password) {
-                    alert('Password do not match. Please try again.');
-                } else {
-                    var result = confirm("Are you sure you want to change password?");
-                    if (result) {
-                        window.location.href = "change-password.php?patientID=".$id;
-                    }
-                }   
-            }            
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
 </body>
 </html>
