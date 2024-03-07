@@ -1,5 +1,17 @@
 <?php 
     include("db_connection.php");
+
+    // if($_SERVER["REQUEST_METHOD"] == "POST"){
+    //     $statusID = $_POST["statusID"];
+
+    //     if ($statusID == 1) {
+    //         $sql = "UPDATE tblappt SET statusID = $statusID WHERE patientID = $apptID";
+    //         $result = $conn->query($sql);
+    //         if ($result) {         
+    //             //
+    //         }
+    //     }
+    // }
 ?>
 
 <!DOCTYPE html>
@@ -172,11 +184,32 @@
                                         echo $row["serviceName"];
                                         ?><?php echo'</td>
                                     <td>'.$date.'</td>
-                                    <td>'?><?php $sql = "SELECT status FROM tblstatus WHERE statusID='$statID';"; 
-                                        $result = $conn->query($sql);
-                                        $row = $result->fetch_assoc();
-                                        echo $row["status"];
-                                        ?><?php echo'</td>
+                                    <td>
+                                        <form method="post">
+                                        <select class="form-select" aria-label="Default select example" name="statusID" required>
+                                            <option selected>'?> <?php
+                                                if($statID==1){
+                                                    echo '
+                                                    <option selected>Pending</option> 
+                                                    <option>Completed</option>
+                                                    <option>Cancelled</option>';
+                                                } else if($statID==2){
+                                                    echo '
+                                                    <option selected>Completed</option> 
+                                                    <option>Pending</option>
+                                                    <option>Cancelled</option>';
+                                                } else if($statID==3){
+                                                    echo '
+                                                    <option selected>Cancelled</option> 
+                                                    <option>Pending</option>
+                                                    <option>Completed</option>';
+                                                } 
+                                                echo'
+                                            </option>
+                                        </select>
+                                        </form>
+                                    </td>                                 
+                                    </tr>
                                 ';
 
                             }
